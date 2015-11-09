@@ -5,6 +5,28 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusPlanner.API", "BusPlanner.API\BusPlanner.API.csproj", "{7457983B-8C17-40E6-AF13-162AC123C99F}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "BusPlanner.Web", "BusPlanner.Web\", "{0DCF4C28-F044-4762-9661-10AB3053070F}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_65112"
+		Debug.AspNetCompiler.PhysicalPath = "BusPlanner.Web\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_65112\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_65112"
+		Release.AspNetCompiler.PhysicalPath = "BusPlanner.Web\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_65112\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "65112"
+		SlnRelativePath = "BusPlanner.Web\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +37,10 @@ Global
 		{7457983B-8C17-40E6-AF13-162AC123C99F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7457983B-8C17-40E6-AF13-162AC123C99F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7457983B-8C17-40E6-AF13-162AC123C99F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DCF4C28-F044-4762-9661-10AB3053070F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DCF4C28-F044-4762-9661-10AB3053070F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DCF4C28-F044-4762-9661-10AB3053070F}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DCF4C28-F044-4762-9661-10AB3053070F}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
