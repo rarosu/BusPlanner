@@ -1,0 +1,14 @@
+{
+  "name": "BusPlanner.Web",
+  "description": "Web application for planning bus routes",
+  "version": "0.0.1",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "angular": "~1.4.7",
+    "angular-route": "~1.4.7",
+    "angular-loader": "~1.4.7",
+    "bootstrap": "~3.3.5"
+  }
+}
