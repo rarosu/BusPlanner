@@ -17,7 +17,11 @@ gulp.task('e2e', function() {
 			configFile: './protractor.conf.js'
 		}))
 		.on('error', function(e) {
+			connect.serverClose();
 			throw e;
+		})
+		.on('end', function() {
+			connect.serverClose();
 		});
 });
 
