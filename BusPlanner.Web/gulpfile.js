@@ -3,6 +3,13 @@ var karma = require('karma');
 var connect = require('gulp-connect');
 var protractor = require('gulp-protractor').protractor;
 
+gulp.task('test', function(done) {
+	new karma.Server({
+		configFile: __dirname + '/karma.conf.js',
+		singleRun: true
+	}, done).start();
+});
+
 gulp.task('tdd', function(done) {
 	new karma.Server({
 		configFile: __dirname + '/karma.conf.js'
