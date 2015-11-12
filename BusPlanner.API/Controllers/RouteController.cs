@@ -7,15 +7,9 @@ using System.Web.Http;
 
 namespace BusPlanner.API.Controllers
 {
-    public class Bus
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public Bus PartOfBus { get; set; }
-    }
-
     public class RouteController : ApiController
     {
+        /*
         [Route("api/route")]
         public Bus Get()
         {
@@ -27,8 +21,7 @@ namespace BusPlanner.API.Controllers
             b.PartOfBus.Name = "World";
 
             return b;
-
-            //return "{ name: \"hello\", description: \"From API\" }";
         }
+        */
     }
 }
