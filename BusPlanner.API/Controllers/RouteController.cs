@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BusPlanner.DomainModels;
+using BusPlanner.ServiceLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +11,14 @@ namespace BusPlanner.API.Controllers
 {
     public class RouteController : ApiController
     {
+        private ITripService tripService;
+
+
+        [Route("api/stops")]
+        public List<Stop> Get()
+        {
+            return tripService.GetStops();
+        }
         /*
         [Route("api/route")]
         public Bus Get()

@@ -103,6 +103,20 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BusPlanner.DataAccess\BusPlanner.DataAccess.csproj">
+      <Project>{f8da2bf1-2f44-460c-888c-6514cde17491}</Project>
+      <Name>BusPlanner.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BusPlanner.DomainModels\BusPlanner.DomainModels.csproj">
+      <Project>{22b7044a-0ec3-430c-ab1a-59f4a40e27ec}</Project>
+      <Name>BusPlanner.DomainModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BusPlanner.ServiceLayer\BusPlanner.ServiceLayer.csproj">
+      <Project>{7c266bc8-2ef9-47da-b196-0186d168154f}</Project>
+      <Name>BusPlanner.ServiceLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
