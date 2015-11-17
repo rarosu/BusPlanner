@@ -10,7 +10,7 @@ using System.Data;
 namespace BusPlanner.IntegrationTests
 {
     [TestClass]
-    public class StopRepositoryTests
+    public class StopRepositoryTests : RollbackTestClass
     {
         private IContainer CreateAutofacContainer()
         {

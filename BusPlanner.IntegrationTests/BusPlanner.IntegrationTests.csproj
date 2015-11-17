@@ -57,6 +57,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -74,6 +75,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AssemblySetup.cs" />
+    <Compile Include="RollbackTestClass.cs" />
     <Compile Include="StopRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
