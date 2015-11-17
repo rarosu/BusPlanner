@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IRepository.cs" />
     <Compile Include="IStopRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="IZoneRepository.cs" />

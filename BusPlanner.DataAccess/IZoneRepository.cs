@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace BusPlanner.DataAccess
 {
-    public interface IZoneRepository
+    public interface IZoneRepository : IRepository<Zone, int>
     {
-        void Add(Zone entity);
-        void Delete(Zone entity);
-        Zone Get(int id);
+
     }
 }

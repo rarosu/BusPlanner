@@ -30,13 +30,20 @@ namespace BusPlanner.DataAccess
 
         public void Delete(Zone entity)
         {
-            throw new NotImplementedException();
+            var sql = @"DELETE FROM Zones WHERE Id = @Id";
+            connection.Execute(sql, new { Id = entity.Id }, transaction);
         }
 
         public Zone Get(int id)
         {
             var sql = @"SELECT * FROM Zones WHERE Id = @Id";
             return connection.Query<Zone>(sql, new { Id = id }, transaction).SingleOrDefault();
+        }
+
+        public List<Zone> All()
+        {
+            var sql = @"SELECT * FROM Zones";
+            return connection.Query<Zone>(sql, null, transaction).ToList();
         }
     }
 }

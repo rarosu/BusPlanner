@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace BusPlanner.DataAccess
 {
-    public interface IStopRepository
+    public interface IStopRepository : IRepository<Stop, int>
     {
-        void Add(Stop entity);
-        void Delete(Stop entity);
-        Stop Get(int id);
+
     }
 }

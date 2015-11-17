@@ -38,5 +38,11 @@ namespace BusPlanner.DataAccess
             var sql = @"SELECT * FROM Stops WHERE Id = @Id";
             return connection.Query<Stop>(sql, new { Id = id }, transaction).SingleOrDefault();
         }
+
+        public List<Stop> All()
+        {
+            var sql = @"SELECT * FROM Stops";
+            return connection.Query<Stop>(sql, null, transaction).ToList();
+        }
     }
 }

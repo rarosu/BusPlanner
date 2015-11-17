@@ -12,10 +12,8 @@ namespace BusPlanner.IntegrationTests
     [TestClass]
     public class StopRepositoryTests : RollbackTestClass
     {
-        
-
         [TestMethod]
-        public void GetReturnsExistingStops()
+        public void StopsCanBeAddedAndRetrieved()
         {
             var id = 0;
             var container = AutofacBuilder.CreateContainer();
@@ -39,15 +37,66 @@ namespace BusPlanner.IntegrationTests
         }
 
         [TestMethod]
-        public void GetReturnsNullForNonExistingStops()
+        public void StopsThatDoNotExistAndAreRetrievedShouldReturnNull()
         {
             var container = AutofacBuilder.CreateContainer();
             using (var scope = container.BeginLifetimeScope())
             {
                 var uow = scope.Resolve<IUnitOfWork>();
-                uow.Zones.Add(new Zone { UserFriendlyName = "Falun" });
+                uow.Stops.Get(1).Should().BeNull();
+            }
+        }
+
+        [TestMethod]
+        public void StopsCanBeRetrievedAsList()
+        {
+            var container = AutofacBuilder.CreateContainer();
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var uow = scope.Resolve<IUnitOfWork>();
+                var zone = new Zone { UserFriendlyName = "Borlänge" };
+                uow.Zones.Add(zone);
+                uow.Stops.Add(new Stop { UserFriendlyName = "Uppfartsvägen", Latitude = 60.0f, Longitude = 50.0f, ZoneId = zone.Id });
+                uow.Stops.Add(new Stop { UserFriendlyName = "Medvägen", Latitude = 60.0f, Longitude = 50.0f, ZoneId = zone.Id });
                 uow.SaveChanges();
-                uow.Stops.Get(15).Should().BeNull();
+            }
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var uow = scope.Resolve<IUnitOfWork>();
+                var stops = uow.Stops.All();
+                stops.Should().HaveCount(2);
+            }
+        }
+
+        [TestMethod]
+        public void StopsCanBeDeleted()
+        {
+            var id = 0;
+            var container = AutofacBuilder.CreateContainer();
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var uow = scope.Resolve<IUnitOfWork>();
+                var zone = new Zone { UserFriendlyName = "Borlänge" };
+                uow.Zones.Add(zone);
+                var stop = new Stop { UserFriendlyName = "Uppfartsvägen", Latitude = 60.0f, Longitude = 50.0f, ZoneId = zone.Id };
+                uow.Stops.Add(stop);
+                uow.SaveChanges();
+                id = stop.Id;
+            }
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var uow = scope.Resolve<IUnitOfWork>();
+                var stop = uow.Stops.Get(id);
+                uow.Stops.Delete(stop);
+            }
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var uow = scope.Resolve<IUnitOfWork>();
+                var stop = uow.Stops.Get(id);
+                stop.Should().BeNull();
             }
         }
     }
