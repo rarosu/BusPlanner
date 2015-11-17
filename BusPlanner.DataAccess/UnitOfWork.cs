@@ -8,9 +8,13 @@ namespace BusPlanner.DataAccess
 {
     public class UnitOfWork : IUnitOfWork
     {
-        public UnitOfWork()
-        {
+        public IStopRepository Stops { get; private set; }
+        public IZoneRepository Zones { get; private set; }
 
+        public UnitOfWork(IStopRepository stops, IZoneRepository zones)
+        {
+            Stops = stops;
+            Zones = zones;
         }
 
         public void Dispose()

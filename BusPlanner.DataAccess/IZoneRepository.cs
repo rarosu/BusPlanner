@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace BusPlanner.DataAccess
 {
-    public interface IRouteRepository
+    public interface IZoneRepository
     {
-        /// <summary>
-        /// Get a route entity associated with a route number.
-        /// </summary>
-        Route GetRouteByNumber(int routeNumber);
+        void Add(Zone entity);
+        void Delete(Zone entity);
+        Zone Get(int id);
     }
 }

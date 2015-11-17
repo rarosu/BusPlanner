@@ -8,6 +8,9 @@ namespace BusPlanner.DataAccess
 {
     public interface IUnitOfWork : IDisposable
     {
+        IStopRepository Stops { get; }
+        IZoneRepository Zones { get; }
+
         void SaveChanges();
     }
 }

@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FluentMigrator, Version=1.6.1.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentMigrator.1.6.1\lib\40\FluentMigrator.dll</HintPath>
       <Private>True</Private>
@@ -44,15 +48,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IConnectionPathPointRepository.cs" />
-    <Compile Include="IConnectionRepository.cs" />
-    <Compile Include="IRouteRepository.cs" />
-    <Compile Include="IScheduledRouteRepository.cs" />
     <Compile Include="IStopRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
+    <Compile Include="IZoneRepository.cs" />
     <Compile Include="Migrations\CreateInitialSchema.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StopRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
+    <Compile Include="ZoneRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusPlanner.DomainModels\BusPlanner.DomainModels.csproj">
