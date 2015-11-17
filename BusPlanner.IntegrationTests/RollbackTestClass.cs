@@ -11,7 +11,7 @@ namespace BusPlanner.IntegrationTests
     [TestClass]
     public class RollbackTestClass
     {
-        private static TransactionScope transaction;
+        private TransactionScope transaction;
 
         [TestInitialize]
         public void Initialize()

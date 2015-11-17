@@ -12,17 +12,20 @@ namespace BusPlanner.DataAccess
     public class StopRepository : IStopRepository
     {
         private readonly IDbConnection connection;
+        private readonly IDbTransaction transaction;
 
-        public StopRepository(IDbConnection connection)
+        public StopRepository(IDbConnection connection, IDbTransaction transaction)
         {
             this.connection = connection;
+            this.transaction = transaction;
         }
 
         public void Add(Stop entity)
         {
-            connection.Execute(@"insert Stops(UserFriendlyName,Latitude,Longitude,ZoneId) 
-                                 values(@UserFriendlyName,@Latitude,@Longitude,@ZoneId) 
-                                 select cast(scope_identity() as int) as [Id]", entity);
+            var sql = @"INSERT Stops(UserFriendlyName, Latitude, Longitude, ZoneId) " +
+                      @"VALUES (@UserFriendlyName, @Latitude, @Longitude, @ZoneId); " +
+                      @"SELECT CAST(scope_identity() AS INT)";
+            entity.Id = connection.Query<int>(sql, entity, transaction).Single();
         }
 
         public void Delete(Stop entity)
@@ -32,7 +35,8 @@ namespace BusPlanner.DataAccess
 
         public Stop Get(int id)
         {
-            return connection.Query<Stop>("select * from Stops where Id = @Id", new { Id = id }).SingleOrDefault();
+            var sql = @"SELECT * FROM Stops WHERE Id = @Id";
+            return connection.Query<Stop>(sql, new { Id = id }, transaction).SingleOrDefault();
         }
     }
 }

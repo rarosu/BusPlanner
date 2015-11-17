@@ -12,17 +12,20 @@ namespace BusPlanner.DataAccess
     public class ZoneRepository : IZoneRepository
     {
         private readonly IDbConnection connection;
+        private readonly IDbTransaction transaction;
 
-        public ZoneRepository(IDbConnection connection)
+        public ZoneRepository(IDbConnection connection, IDbTransaction transaction)
         {
             this.connection = connection;
+            this.transaction = transaction;
         }
 
         public void Add(Zone entity)
         {
-            connection.Execute(@"insert Zones(UserFriendlyName) 
-                                 values(@UserFriendlyName) 
-                                 select cast(scope_identity() as int) as [Id]", entity);
+            var sql = @"INSERT Zones(UserFriendlyName)" +
+                      @"VALUES (@UserFriendlyName); " +
+                      @"SELECT CAST(scope_identity() AS INT)";
+            entity.Id = connection.Query<int>(sql, entity, transaction).Single();
         }
 
         public void Delete(Zone entity)
@@ -32,7 +35,8 @@ namespace BusPlanner.DataAccess
 
         public Zone Get(int id)
         {
-            return connection.Query<Zone>("select * from Zones where Id = @Id", new { Id = id }).SingleOrDefault();
+            var sql = @"SELECT * FROM Zones WHERE Id = @Id";
+            return connection.Query<Zone>(sql, new { Id = id }, transaction).SingleOrDefault();
         }
     }
 }
