@@ -12,6 +12,6 @@ namespace BusPlanner.DomainModels
     public class Route
     {
         // Primary keys.
-        public int RouteNumber { get; set; }
+        public int Id { get; set; }
     }
 }

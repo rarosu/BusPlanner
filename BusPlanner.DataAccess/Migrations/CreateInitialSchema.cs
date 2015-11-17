@@ -32,7 +32,7 @@ namespace BusPlanner.DataAccess.Migrations
                 .WithColumn("Longitude").AsFloat().NotNullable()
                 .WithColumn("ConnectionId").AsInt32().NotNullable();
             Create.Table("Routes")
-                .WithColumn("RouteNumber").AsInt32().NotNullable().PrimaryKey().Identity();
+                .WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity();
             Create.Table("RouteConnections")
                 .WithColumn("RouteId").AsInt32().NotNullable()
                 .WithColumn("ConnectionId").AsInt32().NotNullable()
