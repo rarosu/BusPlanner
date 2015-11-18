@@ -16,29 +16,18 @@ namespace BusPlanner.API.Controllers
     [AutofacControllerConfiguration]
     public class RouteController : ApiController
     {
-        public RouteController()
-        {
-            
-        }
-
-        /*
         private ITripService tripService;
 
         public RouteController(ITripService tripService)
-        //public RouteController()
         {
             this.tripService = tripService;
         }
-        */
 
-        [EnableCorsAttribute(origins: "http://localhost:65112", headers: "*", methods: "*")]
+        [EnableCors(origins: "http://localhost:65112", headers: "*", methods: "*")]
         [Route("api/stops")]
         public List<Stop> Get()
         {
-            var tripService = new TripService(new UnitOfWork(new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["BusPlanner"].ConnectionString)));
             return tripService.GetStops();
-            //var stops = tripService.GetStops();
-            //return tripService.GetStops();
         }
     }
 }
