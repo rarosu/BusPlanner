@@ -1,5 +1,10 @@
 ﻿<div class="container-fluid">
     <div class="row">
+        <div class="col-md-12">
+            <h2>Plan your trip!</h2>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-3">
             <form>
                 <div class="form-group">
@@ -14,7 +19,15 @@
         </div>
         <div class="col-md-9">
             <!-- Google Maps map element -->
-            <div id="map"></div>
+            <ui-gmap-google-map id="map"
+                                center="vm.map.center"
+                                pan="vm.map.pan"
+                                zoom="vm.map.zoom"
+                                refresh="vm.map.refresh"
+                                control="vm.map.control"
+                                events="vm.map.events"
+                                bounds="vm.map.bounds">
+            </ui-gmap-google-map>
         </div>
     </div>
 </div>
