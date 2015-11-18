@@ -14,6 +14,9 @@ namespace BusPlanner.API.App_Start
         {
             config.MapHttpAttributeRoutes();
 
+            config.EnableCors();
+            //config.EnableCors(new EnableCorsAttribute("http://localhost:65112", "*", "*"));
+
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
         }
     }

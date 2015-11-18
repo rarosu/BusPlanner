@@ -27,6 +27,7 @@
                                 control="vm.map.control"
                                 events="vm.map.events"
                                 bounds="vm.map.bounds">
+                <ui-gmap-marker ng-repeat="stop in vm.stops" idKey="stop.id" coords="stop.position" options="{label: stop.userFriendlyName, title: stop.userFriendlyName}"></ui-gmap-marker>
             </ui-gmap-google-map>
         </div>
     </div>
