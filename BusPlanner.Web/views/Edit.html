@@ -1,0 +1,22 @@
+﻿<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Add or edit stops and routes</h2>
+            <p class="text-danger"><strong>This functionality is currently on hold.</strong></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <ui-gmap-google-map id="map"
+                                center="vm.map.center"
+                                pan="vm.map.pan"
+                                zoom="vm.map.zoom"
+                                refresh="vm.map.refresh"
+                                control="vm.map.control"
+                                events="vm.map.events"
+                                bounds="vm.map.bounds">
+                <ui-gmap-marker ng-repeat="stop in vm.stops" idKey="stop.id" coords="stop.position" options="{label: stop.userFriendlyName, title: stop.userFriendlyName}"></ui-gmap-marker>
+            </ui-gmap-google-map>
+        </div>
+    </div>
+</div>

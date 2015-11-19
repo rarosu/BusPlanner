@@ -13,24 +13,29 @@
                 <a class="navbar-brand" href="#/index/">Bus Planner</a>
             </div>
             <ul class="nav navbar-nav">
-                <li role="presentation" class="active"><a href="#/index/">Plan Trip</a></li>
-                <li role="presentation"><a href="#/index/">Routes</a></li>
+                <li bs-navbar><a href="/#/index">Plan Trip</a></li>
+                <li bs-navbar><a href="/#/routes">Routes</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li bs-navbar><a href="/#/edit">Edit</a></li>
             </ul>
         </div>
     </nav>
     
     <div ng-view></div>
 
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/angular-loader/angular-loader.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-route/angular-route.min.js"></script>
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
     <script src="bower_components/lodash/lodash.min.js"></script>
     <script src="bower_components/angular-google-maps/dist/angular-google-maps.min.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/HomeController.js"></script>
+    <script src="scripts/controllers/EditController.js"></script>
+    <script src="scripts/directives/NavbarDirective.js"></script>
 </body>
 </html>
