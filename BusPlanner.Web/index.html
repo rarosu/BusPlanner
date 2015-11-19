@@ -15,9 +15,14 @@
             <ul class="nav navbar-nav">
                 <li bs-navbar><a href="/#/index">Plan Trip</a></li>
                 <li bs-navbar><a href="/#/routes">Routes</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li bs-navbar><a href="/#/edit">Edit</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Edit <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li bs-navbar><a href="/#/edit/stops">Stops</a></li>
+                        <li bs-navbar><a href="/#/edit/routes">Routes</a></li>
+                        <li bs-navbar><a href="/#/edit/schedule">Schedule</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </nav>

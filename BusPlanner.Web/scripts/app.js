@@ -13,9 +13,13 @@
                 templateUrl: 'views/Home.html',
                 controller: 'HomeController as vm'
             })
-            .when('/edit', {
-                templateUrl: 'views/Edit.html',
-                controller: "EditController as vm"
+            .when('/edit/stops', {
+                templateUrl: 'views/EditStops.html',
+                controller: "EditStopsController as vm"
+            })
+            .when('/edit/routes', {
+                templateUrl: 'views/EditRoutes.html',
+                controller: "EditRoutesController as vm"
             })
             .otherwise({
                 redirectTo: '/index'
