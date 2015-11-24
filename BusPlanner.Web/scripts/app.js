@@ -11,15 +11,18 @@
         $routeProvider
             .when('/index', {
                 templateUrl: 'views/Home.html',
-                controller: 'HomeController as vm'
+                controller: 'HomeController',
+                controllerAs: 'vm'
             })
             .when('/edit/stops', {
                 templateUrl: 'views/EditStops.html',
-                controller: "EditStopsController as vm"
+                controller: "EditStopsController",
+                controllerAs: 'vm'
             })
             .when('/edit/routes', {
                 templateUrl: 'views/EditRoutes.html',
-                controller: "EditRoutesController as vm"
+                controller: "EditRoutesController",
+                controllerAs: 'vm'
             })
             .otherwise({
                 redirectTo: '/index'

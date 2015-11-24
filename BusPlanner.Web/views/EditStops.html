@@ -8,17 +8,21 @@
     <div class="row">
         <div class="col-md-12">
             <ui-gmap-google-map id="map"
-                                center="vm.map.center"
-                                pan="vm.map.pan"
-                                zoom="vm.map.zoom"
-                                control="vm.map.control">
-                <ui-gmap-marker ng-repeat="stop in vm.stops" idKey="stop.id" coords="stop.position" options="{label: stop.userFriendlyName, title: stop.userFriendlyName, draggable: true}"></ui-gmap-marker>
-                <!--
-                <google-maps-context-menu>
-                    <google-maps-context-item click="vm.addStop">Add Stop</google-maps-context-item>
-                </google-maps-context-menu>
-                -->
+                                center="vm.mapConfig.center"
+                                pan="vm.mapConfig.pan"
+                                zoom="vm.mapConfig.zoom"
+                                control="vm.mapConfig.control">
+                <!--<ui-gmap-marker ng-repeat="stop in vm.stops" idKey="stop.id" coords="stop.position" options="{label: stop.userFriendlyName, title: stop.userFriendlyName, draggable: true}"></ui-gmap-marker>-->
             </ui-gmap-google-map>
+
+            <google-maps-context-menu map-control="vm.mapControl">
+                <google-maps-context-item click="vm.addStop(latlng)">Add stop</google-maps-context-item>
+            </google-maps-context-menu>
+
+            
+            <!--<google-maps-context-menu map-control="vm.mapControl">
+
+            </google-maps-context-menu>-->
         </div>
     </div>
 </div>
