@@ -1,27 +1,23 @@
 ﻿(function () {
     "use strict";
 
-    var app = angular.module('app', [
+    var app = angular.module('busplanner', [
         'ngRoute',
         'ngResource',
-        'uiGmapgoogle-maps'
+        'uiGmapgoogle-maps',
+        'navbar'
     ]);
 
     app.config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/index', {
-                templateUrl: 'views/Home.html',
+                templateUrl: 'components/home/home_template.html',
                 controller: 'HomeController',
                 controllerAs: 'vm'
             })
             .when('/edit/stops', {
-                templateUrl: 'views/EditStops.html',
+                templateUrl: 'components/edit_stops/edit_stops_template.html',
                 controller: "EditStopsController",
-                controllerAs: 'vm'
-            })
-            .when('/edit/routes', {
-                templateUrl: 'views/EditRoutes.html',
-                controller: "EditRoutesController",
                 controllerAs: 'vm'
             })
             .otherwise({

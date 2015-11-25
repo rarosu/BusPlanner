@@ -6,21 +6,22 @@
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="styles/site.css" />
 </head>
-<body ng-app="app">
+<body ng-app="busplanner">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#/index/">Bus Planner</a>
+                <a class="navbar-brand" href="#/index">Bus Planner</a>
             </div>
             <ul class="nav navbar-nav">
-                <li bs-navbar><a href="/#/index">Plan Trip</a></li>
-                <li bs-navbar><a href="/#/routes">Routes</a></li>
+                <nav-item href="#/index">Plan Trip</nav-item>
+                <nav-item href="#/routes">Routes</nav-item>
+
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Edit <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li bs-navbar><a href="/#/edit/stops">Stops</a></li>
-                        <li bs-navbar><a href="/#/edit/routes">Routes</a></li>
-                        <li bs-navbar><a href="/#/edit/schedule">Schedule</a></li>
+                        <nav-item href="#/edit/stops">Stops</nav-item>
+                        <nav-item href="#/edit/routes">Routes</nav-item>
+                        <nav-item href="#/edit/schedule">Schedule</nav-item>
                     </ul>
                 </li>
             </ul>
@@ -38,11 +39,9 @@
     <script src="bower_components/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
     <script src="bower_components/lodash/lodash.min.js"></script>
     <script src="bower_components/angular-google-maps/dist/angular-google-maps.min.js"></script>
-    <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/HomeController.js"></script>
-    <script src="scripts/controllers/EditStopsController.js"></script>
-    <script src="scripts/controllers/EditRoutesController.js"></script>
-    <script src="scripts/directives/NavbarDirective.js"></script>
-    <script src="scripts/directives/GoogleMapsContextMenuDirective.js"></script>
+    <script src="app.module.js"></script>
+    <script src="components/home/home_controller.js"></script>
+    <script src="components/edit_stops/edit_stops_controller.js"></script>
+    <script src="shared/navbar/navbar_directive.js"></script>
 </body>
 </html>

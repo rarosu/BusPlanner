@@ -2,7 +2,7 @@
     "use strict";
 
     angular
-    .module('app')
+    .module('busplanner')
     .controller('HomeController', ['$resource', 'uiGmapGoogleMapApi', function ($resource, uiGmapGoogleMapApi) {
         var vm = this;
 
