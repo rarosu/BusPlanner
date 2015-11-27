@@ -4,8 +4,9 @@
     var app = angular.module('busplanner', [
         'ngRoute',
         'ngResource',
-        'uiGmapgoogle-maps',
-        'navbar'
+        //'uiGmapgoogle-maps',
+        'navbar',
+        'map'
     ]);
 
     app.config(['$routeProvider', function ($routeProvider) {
@@ -24,9 +25,16 @@
                 redirectTo: '/index'
             });
     }])
+    .config(['mapLoaderProvider', function (mapLoaderProvider) {
+        mapLoaderProvider.config({
+            key: 'AIzaSyA87KnhDx803U8qQ4oT_knbqd4XHbo9Tj0'
+        });
+    }]);
+    /*
     .config(['uiGmapGoogleMapApiProvider', function(uiGmapGoogleMapApiProvider) {
         uiGmapGoogleMapApiProvider.configure({
             key: 'AIzaSyA87KnhDx803U8qQ4oT_knbqd4XHbo9Tj0'
         });
     }]);
+    */
 })();

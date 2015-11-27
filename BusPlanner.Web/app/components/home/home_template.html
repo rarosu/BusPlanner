@@ -18,17 +18,9 @@
             </form>
         </div>
         <div class="col-md-9">
-            <!-- Google Maps map element -->
-            <ui-gmap-google-map id="map"
-                                center="vm.map.center"
-                                pan="vm.map.pan"
-                                zoom="vm.map.zoom"
-                                refresh="vm.map.refresh"
-                                control="vm.map.control"
-                                events="vm.map.events"
-                                bounds="vm.map.bounds">
-                <ui-gmap-marker ng-repeat="stop in vm.stops" idKey="stop.id" coords="stop.position" options="{label: stop.userFriendlyName, title: stop.userFriendlyName}"></ui-gmap-marker>
-            </ui-gmap-google-map>
+            <google-map container-id="map-container" center="{lat: 15.0, lng: 45.0}" zoom="8">
+
+            </google-map>
         </div>
     </div>
 </div>
