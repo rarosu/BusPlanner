@@ -13,8 +13,10 @@
                 zoom: '='
             },
             controller: ['$q', function ($q) {
-                this.deferredMap = $q.defer();
-                this.mapPromise = this.deferredMap.promise;
+                this._deferred = $q.defer();
+                this.ready = function (callback) {
+                    this._deferred.promise.then(callback);
+                };
             }],
             link: function (scope, element, attrs, controller) {
                 mapLoader.then(function (maps) {
@@ -26,7 +28,7 @@
 
                     google.maps.event.addListenerOnce(map, 'idle', function () {
                         google.maps.event.trigger(map, 'resize');
-                        controller.deferredMap.resolve(map);
+                        controller._deferred.resolve(map);
                     });
                 });
             }
