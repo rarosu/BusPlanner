@@ -19,11 +19,25 @@
         </div>
         <div class="col-md-9">
             <google-map container-id="map-container" center="{lat: 15.0, lng: 45.0}" zoom="8">
-                <google-map-marker position="{lat: 15.0, lng: 35.0}">Test marker</google-map-marker>
-                <google-map-marker position="{lat: 15.0, lng: 55.0}">The title of the marker</google-map-marker>
+                <google-map-marker ng-repeat="stop in vm.stops" position="stop.position" title="{{stop.title}}">
+                    <google-map-context-menu show-callback="vm.contextMenuShow">
+                        <google-map-context-menu class="btn-group-vertical" role="group" show-callback="vm.contextMenuShow">
+                            <a class="btn btn-default" ng-click="vm.removeStop()">Remove stop</a>
+                        </google-map-context-menu>
+                    </google-map-context-menu>
+                </google-map-marker>
+
+                <!--
+                <google-map-marker position="{lat: 15.0, lng: 35.0}" title="Test marker">
+                    <google-map-context-menu show-callback="vm.contextMenuShow">
+                        <google-map-context-menu class="btn-group-vertical" role="group" show-callback="vm.contextMenuShow">
+                            <a class="btn btn-default" ng-click="vm.removeStop()">Remove stop</a>
+                        </google-map-context-menu>
+                    </google-map-context-menu>
+                </google-map-marker>
+                -->
                 <google-map-context-menu class="btn-group-vertical" role="group" show-callback="vm.contextMenuShow">
-                    <a class="btn btn-default" ng-click="vm.addStop()">Hello world</a>
-                    <a class="btn btn-default">Test</a>
+                    <a class="btn btn-default" ng-click="vm.addStop()">Add stop</a>
                 </google-map-context-menu>
             </google-map>
         </div>

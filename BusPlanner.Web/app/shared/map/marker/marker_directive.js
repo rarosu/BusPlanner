@@ -9,7 +9,8 @@
             replace: true,
             templateUrl: 'shared/map/marker/marker_template.html',
             scope: {
-                position: '='
+                position: '=',
+                title: '@'
             },
             require: '^googleMap',
             link: function (scope, element, attrs, controller) {
@@ -17,7 +18,7 @@
                     var marker = new google.maps.Marker({
                         position: scope.position,
                         map: map,
-                        title: element.children().html()
+                        title: scope.title
                     });
                 });
             }
