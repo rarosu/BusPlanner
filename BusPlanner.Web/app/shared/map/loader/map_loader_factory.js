@@ -9,8 +9,6 @@
 
         return {
             load: function (params) {
-                console.log("Loading Google Maps");
-
                 var deferred = $q.defer();
                 if (isGoogleMapsLoaded()) {
                     deferred.resolve(window.google.maps);

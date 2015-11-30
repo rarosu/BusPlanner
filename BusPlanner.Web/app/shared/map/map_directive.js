@@ -18,8 +18,6 @@
             }],
             link: function (scope, element, attrs, controller) {
                 mapLoader.then(function (maps) {
-                    console.log("Maps loaded");
-                    
                     var mapElement = element.children()[0];
                     var map = new google.maps.Map(mapElement, {
                         center: scope.center,
