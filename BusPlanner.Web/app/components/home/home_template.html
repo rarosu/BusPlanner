@@ -21,9 +21,9 @@
             <google-map container-id="map-container" center="{lat: 15.0, lng: 45.0}" zoom="8">
                 <google-map-marker position="{lat: 15.0, lng: 35.0}">Test marker</google-map-marker>
                 <google-map-marker position="{lat: 15.0, lng: 55.0}">The title of the marker</google-map-marker>
-                <google-map-context-menu>
-                    <google-map-context-menu-item click="vm.addStop">Hello world</google-map-context-menu-item>
-                    <google-map-context-menu-item>Test item</google-map-context-menu-item>
+                <google-map-context-menu class="btn-group-vertical" role="group" show-callback="vm.contextMenuShow">
+                    <a class="btn btn-default" ng-click="vm.addStop()">Hello world</a>
+                    <a class="btn btn-default">Test</a>
                 </google-map-context-menu>
             </google-map>
         </div>

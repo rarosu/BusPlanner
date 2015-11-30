@@ -6,9 +6,10 @@
         return {
             restrict: 'E',
             transclude: true,
+            replace: true,
             templateUrl: 'shared/map/context_menu/context_menu_template.html',
             scope: {
-
+                showCallback: '='
             },
             controller: [function () {
 
@@ -37,12 +38,9 @@
                         scope.menuStyle.visibility = 'visible';
                         scope.$digest();
 
-                        // Broadcast the location on the map that was clicked, for use by the menu items.
-                        scope.$broadcast('context_menu_show', {
-                            latlng: {
-                                lat: e.latLng.lat(), 
-                                lng: e.latLng.lng()
-                            }
+                        scope.showCallback({
+                            lat: e.latLng.lat(),
+                            lng: e.latLng.lng()
                         });
                     }
 
