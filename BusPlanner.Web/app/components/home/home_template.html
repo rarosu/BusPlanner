@@ -54,11 +54,32 @@
             </google-map>
             -->
 
+            somecontrollervariable: {{vm.somecontrollervariable}}
             <google-map gmap-element="map" container-id="map-container" center="{lat: 15.0, lng: 45.0}" zoom="8">
                 <google-map-marker gmap-element="marker" gmap-target="map" position="{lat: 15.0, lng: 45.0}" title="hello">
-                    
+
                 </google-map-marker>
                 
+                <p>somecontrollervariable: {{vm.somecontrollervariable}}</p>
+
+                <google-map-marker ng-repeat="stop in vm.stops" gmap-element="marker" gmap-target="map" position="stop.position" title="{{stop.title}}">
+                    <!--
+                    <google-map-context-menu gmap-target="marker" click-position="menuPosition">
+                        <div class="btn-group-vertical" role="group">
+                            <a class="btn btn-default" ng-click="vm.removeStop(stop)">Remove stop</a>
+                        </div>
+                    </google-map-context-menu>
+                    -->
+                </google-map-marker>
+
+                <google-map-context-menu gmap-target="map" click-position="menuPosition">
+                    <div class="btn-group-vertical" role="group">
+                        <a class="btn btn-default" ng-click="vm.addStop(menuPosition)">Add stop</a>
+                    </div>
+                </google-map-context-menu>
+                
+                {{vm.stops.length}}
+
                 <!--
                 <google-map-marker ng-repeat="stop in vm.stops" gmap-element="marker" target="map" position="stop.position" title="{{stop.title}}">
 

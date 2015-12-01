@@ -18,9 +18,12 @@
                 var transclusionScope = scope.$new();
                 var transclusionTarget = element[0].querySelector('[transclude-target]');
                 transclusionScope[scope.gmapElement] = $q.defer();
-                transcludeFn(transclusionScope, function (clone) {
+                transclusionScope.vm = scope.$parent.vm;
+                transcludeFn(transclusionScope, function (clone, scope) {
                     angular.element(transclusionTarget).append(clone);
                 });
+
+                console.log(transclusionScope);
 
                 mapLoader.then(function (maps) {
                     // Create a map element.
@@ -36,7 +39,10 @@
                         google.maps.event.trigger(map, 'resize');
 
                         // The map is ready for use.
-                        transclusionScope[scope.gmapElement].resolve(map);
+                        transclusionScope[scope.gmapElement].resolve({
+                            map: map,
+                            element: map
+                        });
                     });
                 });
             }

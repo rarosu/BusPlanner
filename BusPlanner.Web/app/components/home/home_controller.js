@@ -6,6 +6,7 @@
     .controller('HomeController', ['$resource', 'mapLoader', function ($resource, mapLoader) {
         var vm = this;
 
+        vm.somecontrollervariable = 'VALUE';
         vm.contextMenuPosition = { lat: 0, lng: 0};
         vm.stops = [
             {
@@ -24,19 +25,14 @@
             }
         ];
 
-        vm.contextMenuShow = function (latlng) {
-            vm.contextMenuPosition = latlng;
-            console.log('showing context menu');
-            console.log(vm.contextMenuPosition);
-        };
-
-        vm.addStop = function () {
+        vm.addStop = function (position) {
             console.log('add stop');
-            console.log(vm.contextMenuPosition);
+            console.log(position);
         };
 
-        vm.removeStop = function () {
-
+        vm.removeStop = function (stop) {
+            console.log('removing stop');
+            console.log(stop);
         }
     }]);
 })();

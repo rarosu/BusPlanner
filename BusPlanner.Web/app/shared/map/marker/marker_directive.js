@@ -14,6 +14,8 @@
                 title: '@'
             },
             link: function (scope, element, attrs, controller, transcludeFn) {
+                console.log('marker: ' + scope.title);
+
                 // Create a new transclusion scope and add a marker promise to it.
                 var transclusionScope = scope.$new();
                 var transclusionTarget = element[0].querySelector('[transclude-target]');
@@ -22,15 +24,18 @@
                     angular.element(transclusionTarget).append(clone);
                 });
 
-                scope.gmapTarget.promise.then(function (map) {
+                scope.gmapTarget.promise.then(function (gmapElement) {
                     // Create a marker.
                     var marker = new google.maps.Marker({
                         position: scope.position,
-                        map: map,
+                        map: gmapElement.map,
                         title: scope.title
                     });
 
-                    transclusionScope[scope.gmapElement].resolve(marker);
+                    transclusionScope[scope.gmapElement].resolve({
+                        map: gmapElement.map,
+                        element: marker
+                    });
                 });
             }
         };
