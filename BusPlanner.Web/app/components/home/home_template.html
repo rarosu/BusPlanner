@@ -54,6 +54,7 @@
             </google-map>
             -->
 
+            <!--
             somecontrollervariable: {{vm.somecontrollervariable}}
             <google-map gmap-element="map" container-id="map-container" center="{lat: 15.0, lng: 45.0}" zoom="8">
                 <google-map-marker gmap-element="marker" gmap-target="map" position="{lat: 15.0, lng: 45.0}" title="hello">
@@ -63,13 +64,11 @@
                 <p>somecontrollervariable: {{vm.somecontrollervariable}}</p>
 
                 <google-map-marker ng-repeat="stop in vm.stops" gmap-element="marker" gmap-target="map" position="stop.position" title="{{stop.title}}">
-                    <!--
                     <google-map-context-menu gmap-target="marker" click-position="menuPosition">
                         <div class="btn-group-vertical" role="group">
                             <a class="btn btn-default" ng-click="vm.removeStop(stop)">Remove stop</a>
                         </div>
                     </google-map-context-menu>
-                    -->
                 </google-map-marker>
 
                 <google-map-context-menu gmap-target="map" click-position="menuPosition">
@@ -80,12 +79,22 @@
                 
                 {{vm.stops.length}}
 
-                <!--
+                
                 <google-map-marker ng-repeat="stop in vm.stops" gmap-element="marker" target="map" position="stop.position" title="{{stop.title}}">
 
                 </google-map-marker>
-                -->
+                
             </google-map>
+            -->
+
+            <p>Parent scope id: {{$id}}</p>
+            <google-map gmap-element="map" container-id="map-container" center="{lat: 15.0, lng: 45.0}" zoom="8">
+                <p>Transcluded scope id: {{$id}}</p>
+                <p>Access to vm: {{vm !== undefined}}</p>
+                <p>vm.test: {{vm.test}}</p>
+                <p>transcludedScopeVariable: {{transcludedScopeVariable}}</p>
+            </google-map>
+            <p>transcludedScopeVariable: {{transcludedScopeVariable}}</p>
         </div>
     </div>
 </div>

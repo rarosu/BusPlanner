@@ -6,20 +6,25 @@
     .controller('HomeController', ['$resource', 'mapLoader', function ($resource, mapLoader) {
         var vm = this;
 
-        vm.somecontrollervariable = 'VALUE';
-        vm.contextMenuPosition = { lat: 0, lng: 0};
+        vm.test = 'Test string from the controller.';
+
+        vm.mapConfig = {
+            center: { lat: 15.0, lng: 45.0 },
+            zoom: 8
+        };
+
         vm.stops = [
             {
                 position: {
                     lat: 15.0,
-                    lng: 35.0
+                    lng: 45.0
                 },
                 title: 'Bus Stop 1'
             },
             {
                 position: {
                     lat: 15.0,
-                    lng: 36.0
+                    lng: 46.0
                 },
                 title: 'Bus Stop 2'
             }

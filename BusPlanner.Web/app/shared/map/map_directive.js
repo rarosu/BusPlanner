@@ -23,7 +23,7 @@
                     angular.element(transclusionTarget).append(clone);
                 });
 
-                console.log(transclusionScope);
+                transclusionScope.transcludedScopeVariable = 'variable from the transcluded scope';
 
                 mapLoader.then(function (maps) {
                     // Create a map element.
@@ -45,6 +45,17 @@
                         });
                     });
                 });
+                /*
+                //console.log('transclusionScope');
+                //console.log(transclusionScope);
+                console.log('scope');
+                console.log(scope);
+                console.log('scope.$$nextSibling');
+                console.log(scope.$$nextSibling);
+                
+
+                
+                */
             }
         };
     }]);
