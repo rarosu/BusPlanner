@@ -14,16 +14,15 @@
                 zoom: '='
             },
             link: function (scope, element, attrs, controller, transcludeFn) {
-                // Create a new transclusion scope and add a map promise to it.
-                var transclusionScope = scope.$new();
+                var deferred = $q.defer();
+
+                // Put the map promise on the transcluded scope.
                 var transclusionTarget = element[0].querySelector('[transclude-target]');
-                transclusionScope[scope.gmapElement] = $q.defer();
-                transclusionScope.vm = scope.$parent.vm;
-                transcludeFn(transclusionScope, function (clone, scope) {
+                transcludeFn(function (clone, transclusionScope) {
+                    transclusionScope[scope.gmapElement] = deferred.promise;
                     angular.element(transclusionTarget).append(clone);
                 });
-
-                transclusionScope.transcludedScopeVariable = 'variable from the transcluded scope';
+                
 
                 mapLoader.then(function (maps) {
                     // Create a map element.
@@ -39,23 +38,12 @@
                         google.maps.event.trigger(map, 'resize');
 
                         // The map is ready for use.
-                        transclusionScope[scope.gmapElement].resolve({
+                        deferred.resolve({
                             map: map,
                             element: map
                         });
                     });
                 });
-                /*
-                //console.log('transclusionScope');
-                //console.log(transclusionScope);
-                console.log('scope');
-                console.log(scope);
-                console.log('scope.$$nextSibling');
-                console.log(scope.$$nextSibling);
-                
-
-                
-                */
             }
         };
     }]);

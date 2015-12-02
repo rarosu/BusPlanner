@@ -14,17 +14,16 @@
                 title: '@'
             },
             link: function (scope, element, attrs, controller, transcludeFn) {
-                console.log('marker: ' + scope.title);
+                var deferred = $q.defer();
 
-                // Create a new transclusion scope and add a marker promise to it.
-                var transclusionScope = scope.$new();
+                // Put the marker promise on the transcluded scope.
                 var transclusionTarget = element[0].querySelector('[transclude-target]');
-                transclusionScope[scope.gmapElement] = $q.defer();
-                transcludeFn(transclusionScope, function (clone) {
+                transcludeFn(function (clone, transclusionScope) {
+                    transclusionScope[scope.gmapElement] = deferred.promise;
                     angular.element(transclusionTarget).append(clone);
                 });
 
-                scope.gmapTarget.promise.then(function (gmapElement) {
+                scope.gmapTarget.then(function (gmapElement) {
                     // Create a marker.
                     var marker = new google.maps.Marker({
                         position: scope.position,
@@ -32,7 +31,7 @@
                         title: scope.title
                     });
 
-                    transclusionScope[scope.gmapElement].resolve({
+                    deferred.resolve({
                         map: gmapElement.map,
                         element: marker
                     });
