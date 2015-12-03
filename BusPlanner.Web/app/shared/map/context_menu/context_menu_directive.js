@@ -2,7 +2,7 @@
     "use strict";
 
     angular.module('map')
-    .directive('googleMapContextMenu', [function () {
+    .directive('googleMapContextMenu', ['contextMenuService', function (contextMenuService) {
         return {
             restrict: 'E',
             transclude: true,
@@ -21,28 +21,14 @@
                     angular.element(transclusionTarget).append(clone);
                 });
 
-                // Setup the initial style for the menu.
+                // Setup an initial menu and its style.
                 scope.menuStyle = {};
-                scope.menuStyle.visibility = 'hidden';
-                scope.menuStyle.position = 'absolute';
+                var menu = contextMenuService.createMenu(scope, scope.menuStyle);
 
                 scope.gmapTarget.then(function (gmapElement) {
-                    function latlngToPoint(map, latlng) {
-                        var scale = Math.pow(2, map.getZoom());
-                        var projection = map.getProjection();
-                        var topRight = projection.fromLatLngToPoint(map.getBounds().getNorthEast());
-                        var bottomLeft = projection.fromLatLngToPoint(map.getBounds().getSouthWest());
-                        var point = projection.fromLatLngToPoint(latlng);
-                        return new google.maps.Point((point.x - bottomLeft.x) * scale, (point.y - topRight.y) * scale);
-                    }
-
                     function rightClickHandler(e) {
                         // Show the menu at the click location.
-                        var point = latlngToPoint(gmapElement.map, e.latLng);
-                        scope.menuStyle['top'] = Math.round(point.y) + 'px';
-                        scope.menuStyle['left'] = Math.round(point.x) + 'px';
-                        scope.menuStyle.visibility = 'visible';
-                        scope.$digest();
+                        menu.show(gmapElement.map, e.latLng);
 
                         // Update the click position.
                         clickPosition.lat = e.latLng.lat();
@@ -51,9 +37,7 @@
 
                     function leftClickHandler(e) {
                         if (e.which == 1) {
-                            // Hide the menu.
-                            scope.menuStyle.visibility = 'hidden';
-                            scope.$digest();
+                            menu.hide();
                         }
                     }
 
@@ -63,6 +47,7 @@
 
                     // Remove the listeners when destroying the element.
                     scope.$on('$destroy', function () {
+                        contextMenuService.removeMenu(menu);
                         google.maps.event.clearListeners(gmapElement.element, 'rightclick');
                         document.removeEventListener('click', leftClickHandler);
                     });
