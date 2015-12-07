@@ -29,6 +29,13 @@
             }
         ];
 
+        vm.selectedStop = vm.stops[0];
+
+        vm.selectStop = function (event, stop) {
+            vm.selectedStop = stop;
+            console.log('hello');
+        };
+
         vm.addStop = function (position) {
             vm.stops.push({
                 position: angular.copy(position),
