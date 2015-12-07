@@ -7,11 +7,23 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <!--
-            <google-map container-id="map-container" center="{lat: 15.0, lng: 45.0}" zoom="8">
+            <input type="number" step="any" ng-model="vm.stops[0].position.lat" />
+            <input type="number" step="any" ng-model="vm.stops[0].position.lng" />
 
+            <google-map gmap-element="map" container-id="map-container" center="vm.mapConfig.center" zoom="vm.mapConfig.zoom">
+                <google-map-marker ng-repeat="stop in vm.stops" gmap-element="marker" gmap-target="map" position="stop.position" title="{{stop.title}}" draggable="true">
+                    <google-map-context-menu gmap-target="marker" click-position="menuPosition">
+                        <div class="btn-group-vertical" role="group">
+                            <a class="btn btn-default" ng-click="vm.removeStop(stop)">Remove stop</a>
+                        </div>
+                    </google-map-context-menu>
+                </google-map-marker>
+                <google-map-context-menu gmap-target="map" click-position="menuPosition">
+                    <div class="btn-group-vertical" role="group">
+                        <a class="btn btn-default" ng-click="vm.addStop(menuPosition)">Add stop</a>
+                    </div>
+                </google-map-context-menu>
             </google-map>
-            -->
         </div>
     </div>
 </div>
