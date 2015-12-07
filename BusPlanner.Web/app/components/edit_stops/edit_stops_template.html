@@ -7,9 +7,6 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <input type="number" step="any" ng-model="vm.stops[0].position.lat" />
-            <input type="number" step="any" ng-model="vm.stops[0].position.lng" />
-
             <google-map gmap-element="map" container-id="map-container" center="vm.mapConfig.center" zoom="vm.mapConfig.zoom">
                 <google-map-marker ng-repeat="stop in vm.stops" gmap-element="marker" gmap-target="map" position="stop.position" title="{{stop.title}}" draggable="true">
                     <google-map-context-menu gmap-target="marker" click-position="menuPosition">

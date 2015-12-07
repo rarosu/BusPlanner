@@ -30,13 +30,17 @@
         ];
 
         vm.addStop = function (position) {
-            console.log('add stop');
-            console.log(position);
+            vm.stops.push({
+                position: angular.copy(position),
+                title: 'New stop'
+            });
         };
 
         vm.removeStop = function (stop) {
-            console.log('removing stop');
-            console.log(stop);
+            var index = vm.stops.indexOf(stop);
+            if (index != -1) {
+                vm.stops.splice(index, 1);
+            }
         }
     }]);
 })();

@@ -56,6 +56,10 @@
                         map: gmapElement.map,
                         element: marker
                     });
+
+                    scope.$on('$destroy', function () {
+                        marker.setMap(null);
+                    });
                 });
             }
         };
