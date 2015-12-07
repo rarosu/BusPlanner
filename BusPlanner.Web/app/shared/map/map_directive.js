@@ -2,7 +2,7 @@
     "use strict";
 
     angular.module('map')
-    .directive('googleMap', ['$q', 'mapLoader', function ($q, mapLoader) {
+    .directive('googleMap', ['$q', 'mapLoader', 'mapIsReady', function ($q, mapLoader, mapIsReady) {
         return {
             restrict: 'E',
             transclude: true,
@@ -22,7 +22,6 @@
                     transclusionScope[scope.gmapElement] = deferred.promise;
                     angular.element(transclusionTarget).append(clone);
                 });
-                
 
                 mapLoader.then(function (maps) {
                     // Create a map element.
@@ -41,6 +40,11 @@
                         deferred.resolve({
                             map: map,
                             element: map
+                        });
+
+                        mapIsReady.mapInitialized(map);
+                        scope.$on('$destroy', function () {
+                            mapIsReady.mapDestroyed();
                         });
                     });
                 });

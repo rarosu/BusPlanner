@@ -3,7 +3,7 @@
 
     angular
     .module('busplanner')
-    .controller('EditStopsController', ['$resource', 'mapLoader', function ($resource, mapLoader) {
+    .controller('EditStopsController', ['$resource', 'mapLoader', 'mapIsReady', function ($resource, mapLoader, mapIsReady) {
         var vm = this;
 
         vm.mapConfig = {
@@ -42,5 +42,9 @@
                 vm.stops.splice(index, 1);
             }
         }
+
+        mapIsReady.ready().then(function (map) {
+            
+        });
     }]);
 })();
