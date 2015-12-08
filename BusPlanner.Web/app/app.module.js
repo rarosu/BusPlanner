@@ -5,6 +5,7 @@
         'ngRoute',
         'ngResource',
         //'uiGmapgoogle-maps',
+        'controller_css',
         'navbar',
         'map'
     ]);
@@ -14,12 +15,14 @@
             .when('/index', {
                 templateUrl: 'components/home/home_template.html',
                 controller: 'HomeController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                css: 'components/home/home_style.css'
             })
             .when('/edit/stops', {
                 templateUrl: 'components/edit_stops/edit_stops_template.html',
                 controller: "EditStopsController",
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                css: 'components/edit_stops/edit_stops_style.css'
             })
             .otherwise({
                 redirectTo: '/index'

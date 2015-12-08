@@ -27,10 +27,21 @@
                     </div>
                 </google-map-context-menu>
             </google-map>
-
-            <input type="number" step="any" ng-model="vm.selectedStop.position.lat" />
-            <input type="number" step="any" ng-model="vm.selectedStop.position.lng" />
-            <input type="text" ng-model="vm.selectedStop.title" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form>
+                <div class="form-group">
+                    <input class="form-control" type="number" step="any" ng-model="vm.selectedStop.position.lat" />
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="number" step="any" ng-model="vm.selectedStop.position.lng" />
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" ng-model="vm.selectedStop.title" />
+                </div>
+            </form>
         </div>
     </div>
 </div>

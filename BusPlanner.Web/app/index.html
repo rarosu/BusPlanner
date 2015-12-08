@@ -1,12 +1,13 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app="busplanner">
 <head>
     <title></title>
 	<meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="styles/site.css" />
+    <route-styles></route-styles>
 </head>
-<body ng-app="busplanner">
+<body>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -49,6 +50,7 @@
     <script src="shared/map/context_menu/context_menu_directive.js"></script>
     <script src="shared/map/marker/marker_event_directives.js"></script>
     <script src="shared/navbar/navbar_directive.js"></script>
+    <script src="shared/route_styles/route_styles_directive.js"></script>
     <script src="app.module.js"></script>
     <script src="components/home/home_controller.js"></script>
     <script src="components/edit_stops/edit_stops_controller.js"></script>
