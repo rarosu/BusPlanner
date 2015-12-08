@@ -53,9 +53,10 @@
                         });
                     }
 
-                    // TODO: Change title to a two-way binding, to allow updating the title as well?
-                    //scope.$watch(scope.title, function (newValue, oldValue) {  
-                    //});
+                    // Watch for changes in title.
+                    scope.$watch('title', function (newValue, oldValue) {
+                        marker.setTitle(newValue);
+                    });
 
                     // The marker is ready for use.
                     deferred.resolve({
