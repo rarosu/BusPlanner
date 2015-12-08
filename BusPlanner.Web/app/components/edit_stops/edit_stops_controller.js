@@ -3,7 +3,7 @@
 
     angular
     .module('busplanner')
-    .controller('EditStopsController', ['$resource', 'mapLoader', 'mapIsReady', function ($resource, mapLoader, mapIsReady) {
+    .controller('EditStopsController', ['$scope', '$resource', 'mapLoader', 'mapIsReady', function ($scope, $resource, mapLoader, mapIsReady) {
         var vm = this;
 
         vm.mapConfig = {
@@ -31,9 +31,9 @@
 
         vm.selectedStop = vm.stops[0];
 
-        vm.selectStop = function (event, stop) {
+        vm.selectStop = function (stop) {
             vm.selectedStop = stop;
-            console.log('hello');
+            $scope.$digest();
         };
 
         vm.addStop = function (position) {
