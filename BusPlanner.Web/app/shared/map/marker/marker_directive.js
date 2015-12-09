@@ -30,8 +30,6 @@
                 // Put a promise on the controller, to be used by attributes.
                 controller.gmapElement = deferred.promise;
 
-                
-
                 scope.gmapTarget.then(function (gmapElement) {
                     // Create a marker.
                     var marker = new google.maps.Marker({
