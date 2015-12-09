@@ -36,7 +36,7 @@
                     var fn = $parse(attrs[directiveName]);
                     return function link(scope, element, attrs, controller) {
                         controller.gmapElement.then(function (gmapElement) {
-                            gmapElement.element.addListener(eventNames[eventName], function (e) {
+                            gmapElement.eventHandler.addListener(eventNames[eventName], function (e) {
                                 fn(scope, { event: e });
                             });
                         });

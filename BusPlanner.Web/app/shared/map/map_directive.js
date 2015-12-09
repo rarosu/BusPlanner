@@ -2,7 +2,7 @@
     "use strict";
 
     angular.module('map')
-    .directive('googleMap', ['$q', 'mapLoader', 'mapIsReady', function ($q, mapLoader, mapIsReady) {
+    .directive('googleMap', ['$q', 'mapLoader', 'mapIsReady', 'eventHandlerService', function ($q, mapLoader, mapIsReady, eventHandlerService) {
         return {
             restrict: 'E',
             transclude: true,
@@ -36,10 +36,14 @@
                         // Trigger a resize to make sure that new instances of the map are not rendered grey.
                         google.maps.event.trigger(map, 'resize');
 
+                        // Create an event handler, that can register multiple callbacks to the same event.
+                        var eventHandler = eventHandlerService.createEventHandler(map);
+
                         // The map is ready for use.
                         deferred.resolve({
                             map: map,
-                            element: map
+                            element: map,
+                            eventHandler: eventHandler
                         });
 
                         mapIsReady.mapInitialized(map);

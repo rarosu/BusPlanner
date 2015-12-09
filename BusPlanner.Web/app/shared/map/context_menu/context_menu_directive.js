@@ -42,13 +42,13 @@
                     }
 
                     // Listen to right clicks to show the menu and left clicks to hide the menu.
-                    gmapElement.element.addListener('rightclick', rightClickHandler);
+                    gmapElement.eventHandler.addListener('rightclick', rightClickHandler);
                     document.addEventListener('click', leftClickHandler);
 
                     // Remove the listeners when destroying the element.
                     scope.$on('$destroy', function () {
                         contextMenuService.removeMenu(menu);
-                        google.maps.event.clearListeners(gmapElement.element, 'rightclick');
+                        gmapElement.eventHandler.removeListener('rightclick', rightClickHandler);
                         document.removeEventListener('click', leftClickHandler);
                     });
                 });

@@ -2,7 +2,7 @@
     "use strict";
 
     angular.module('map')
-    .directive('googleMapMarker', ['$q', '$rootScope', function ($q, $rootScope) {
+    .directive('googleMapMarker', ['$q', '$rootScope', 'eventHandlerService', function ($q, $rootScope, eventHandlerService) {
         return {
             restrict: 'E',
             transclude: true,
@@ -29,6 +29,8 @@
 
                 // Put a promise on the controller, to be used by attributes.
                 controller.gmapElement = deferred.promise;
+
+                
 
                 scope.gmapTarget.then(function (gmapElement) {
                     // Create a marker.
@@ -58,10 +60,14 @@
                         marker.setTitle(newValue);
                     });
 
+                    // Create an event handler, that can register multiple callbacks to the same event.
+                    var eventHandler = eventHandlerService.createEventHandler(marker);
+
                     // The marker is ready for use.
                     deferred.resolve({
                         map: gmapElement.map,
-                        element: marker
+                        element: marker,
+                        eventHandler: eventHandler
                     });
 
                     scope.$on('$destroy', function () {
