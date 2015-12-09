@@ -3,11 +3,15 @@
         <div class="col-md-12">
             <h1>Add or edit stops</h1>
             <p class="text-danger"><strong>This functionality is currently under development.</strong></p>
+            <div>
+                <button class="btn btn-primary" ng-disabled="!vm.isMapReady" ng-click="vm.addStopInCenter()">Add Stop</button>
+                <button class="btn btn-success"><b>Save</b></button>
+            </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row top-7">
         <div class="col-md-12">
-            <google-map gmap-element="map" container-id="map-container" center="vm.mapConfig.center" zoom="vm.mapConfig.zoom">
+            <google-map gmap-element="map" container-id="map-container" center="vm.mapConfig.center" zoom="vm.mapConfig.zoom" gmap-map-click="vm.selectStop(null)">
                 <google-map-marker ng-repeat="stop in vm.stops" 
                                    gmap-element="marker" 
                                    gmap-target="map" 
@@ -31,7 +35,6 @@
     </div>
     <div class="row top-7" ng-show="vm.selectedStop != null">
         <div class="col-md-12">
-        <!--<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">-->
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
@@ -47,11 +50,11 @@
                     <form>
                         <div class="form-group col-md-6 col-sm-6">
                             <label for="edit-stop-latitude-input">Latitude</label>
-                            <input id="edit-stop-latitude-input" class="form-control" type="number" step="any" ng-model="vm.selectedStop.position.lat" />
+                            <input id="edit-stop-latitude-input" class="form-control" type="number" step="0.001" ng-model="vm.selectedStop.position.lat" />
                         </div>
                         <div class="form-group col-md-6 col-sm-6">
                             <label for="edit-stop-longitude-input">Longitude</label>
-                            <input id="edit-stop-longitude-input" class="form-control" type="number" step="any" ng-model="vm.selectedStop.position.lng" />
+                            <input id="edit-stop-longitude-input" class="form-control" type="number" step="0.001" ng-model="vm.selectedStop.position.lng" />
                         </div>
                         <div class="form-group col-md-12">
                             <label for="edit-stop-title-input">Name</label>
@@ -62,9 +65,9 @@
             </div>
         </div>
     </div>
-    <div class="row top-7">
+    <!--<div class="row top-7">
         <div class="col-md-offset-3 col-md-6">
             <button class="btn btn-lg btn-success btn-block"><b>Save</b></button>
         </div>
-    </div>
+    </div>-->
 </div>

@@ -13,6 +13,9 @@
                 center: '=',
                 zoom: '='
             },
+            controller: function() {
+
+            },
             link: function (scope, element, attrs, controller, transcludeFn) {
                 var deferred = $q.defer();
 
@@ -22,6 +25,9 @@
                     transclusionScope[scope.gmapElement] = deferred.promise;
                     angular.element(transclusionTarget).append(clone);
                 });
+
+                // Put a promise on the controller, to be used by attributes.
+                controller.gmapElement = deferred.promise;
 
                 mapLoader.then(function (maps) {
                     // Create a map element.

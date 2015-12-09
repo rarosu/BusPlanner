@@ -6,34 +6,56 @@
     .controller('EditStopsController', ['$scope', '$resource', 'mapLoader', 'mapIsReady', function ($scope, $resource, mapLoader, mapIsReady) {
         var vm = this;
 
+        //////////////////////////
+        // Controller variables //
+        //////////////////////////
+
         vm.mapConfig = {
             center: {
-                lat: 15.0,
-                lng: 45.0
+                lat: 60.5,
+                lng: 15.5
             },
-            zoom: 8
+            zoom: 14
         }
 
         vm.stops = [{
                 position: {
-                    lat: 15.0,
-                    lng: 45.0
+                    lat: 60.4988799567414,
+                    lng: 15.476053237915
                 },
-                title: 'Bus Stop 1'
+                title: 'Barbergsvägen'
             }, {
                 position: {
-                    lat: 15.0,
-                    lng: 46.0
+                    lat: 60.5005273478001,
+                    lng: 15.4825901985168
                 },
-                title: 'Bus Stop 2'
+                title: 'Borlänge Lövängsgatan'
             }
         ];
 
+        vm.isMapReady = false;
+        vm.map = null;
         vm.selectedStop = null;
+
+
+        ////////////////////////
+        // Controller methods //
+        ////////////////////////
 
         vm.selectStop = function (stop) {
             vm.selectedStop = stop;
             $scope.$digest();
+        };
+
+        vm.addStopInCenter = function () {
+            if (vm.isMapReady) {
+                var center = vm.map.getCenter();
+                var position = {
+                    lat: center.lat(),
+                    lng: center.lng()
+                };
+                vm.addStop(position);
+            }
         };
 
         vm.addStop = function (position) {
@@ -58,7 +80,8 @@
         }
 
         mapIsReady.ready().then(function (map) {
-            
+            vm.isMapReady = true;
+            vm.map = map;
         });
     }]);
 })();
