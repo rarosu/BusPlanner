@@ -29,7 +29,7 @@
             }
         ];
 
-        vm.selectedStop = vm.stops[0];
+        vm.selectedStop = null;
 
         vm.selectStop = function (stop) {
             vm.selectedStop = stop;
@@ -37,15 +37,22 @@
         };
 
         vm.addStop = function (position) {
-            vm.stops.push({
+            var stop = {
                 position: angular.copy(position),
                 title: 'New stop'
-            });
+            };
+
+            vm.stops.push(stop);
+            vm.selectedStop = stop;
         };
 
         vm.removeStop = function (stop) {
             var index = vm.stops.indexOf(stop);
             if (index != -1) {
+                if (vm.stops[index] == vm.selectedStop) {
+                    vm.selectedStop = null;
+                }
+
                 vm.stops.splice(index, 1);
             }
         }
