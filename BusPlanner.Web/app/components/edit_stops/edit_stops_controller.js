@@ -3,7 +3,7 @@
 
     angular
     .module('busplanner')
-    .controller('EditStopsController', ['$scope', '$resource', 'mapLoader', 'mapIsReady', function ($scope, $resource, mapLoader, mapIsReady) {
+    .controller('EditStopsController', ['$scope', '$resource', 'mapLoader', 'mapIsReady', 'unitOfWorkService', 'stopRepositoryService', 'stopService', function ($scope, $resource, mapLoader, mapIsReady, unitOfWorkService, stopRepositoryService, stopService) {
         var vm = this;
 
         //////////////////////////
@@ -18,6 +18,7 @@
             zoom: 14
         }
 
+        /*
         vm.stops = [{
                 position: {
                     lat: 60.4988799567414,
@@ -32,6 +33,24 @@
                 title: 'Borlänge Lövängsgatan'
             }
         ];
+        */
+
+        /*
+        vm.stops = [];
+        editStopsUnitOfWorkService.getStops().then(function (stops) {
+            vm.stops = stops;
+        }, function (error) {
+            // TODO: Handle failure to load events.
+        });
+        */
+
+        var unitOfWork = unitOfWorkService.create(stopRepositoryService, stopService.getUtils());
+        unitOfWork.getAll().then(function (stops) {
+            vm.stops = stops;
+        }, function (error) {
+            console.log(error);
+            vm.stops = [];
+        });
 
         vm.isMapReady = false;
         vm.map = null;
@@ -54,17 +73,18 @@
                     lat: center.lat(),
                     lng: center.lng()
                 };
+
                 vm.addStop(position);
             }
         };
 
         vm.addStop = function (position) {
-            var stop = {
-                position: angular.copy(position),
-                title: 'New stop'
-            };
+            var stop = stopService.create();
+            stop.position = position;
 
-            vm.stops.push(stop);
+            unitOfWork.add(stop);
+            console.log(unitOfWork);
+
             vm.selectedStop = stop;
         };
 
@@ -75,7 +95,7 @@
                     vm.selectedStop = null;
                 }
 
-                vm.stops.splice(index, 1);
+                unitOfWork.remove(stop);
             }
         }
 

@@ -7,7 +7,10 @@
         //'uiGmapgoogle-maps',
         'controller_css',
         'navbar',
-        'map'
+        'map',
+        'unit_of_work',
+        'busplanner.models',
+        'busplanner.repositories'
     ]);
 
     app.config(['$routeProvider', function ($routeProvider) {

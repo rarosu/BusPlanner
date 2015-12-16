@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7C266BC8-2EF9-47DA-B196-0186D168154F}</ProjectGuid>
+    <ProjectGuid>{6735758D-1E1C-437C-83DA-3B5C82694D89}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BusPlanner.ServiceLayer</RootNamespace>
-    <AssemblyName>BusPlanner.ServiceLayer</AssemblyName>
+    <RootNamespace>BusPlanner.ViewModels</RootNamespace>
+    <AssemblyName>BusPlanner.ViewModels</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,23 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IStopsService.cs" />
-    <Compile Include="StopsService.cs" />
+    <Compile Include="LatLng.cs" />
+    <Compile Include="Stop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BusPlanner.DataAccess\BusPlanner.DataAccess.csproj">
-      <Project>{f8da2bf1-2f44-460c-888c-6514cde17491}</Project>
-      <Name>BusPlanner.DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BusPlanner.DomainModels\BusPlanner.DomainModels.csproj">
-      <Project>{22b7044a-0ec3-430c-ab1a-59f4a40e27ec}</Project>
-      <Name>BusPlanner.DomainModels</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BusPlanner.ViewModels\BusPlanner.ViewModels.csproj">
-      <Project>{6735758d-1e1c-437c-83da-3b5c82694d89}</Project>
-      <Name>BusPlanner.ViewModels</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

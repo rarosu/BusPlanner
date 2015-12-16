@@ -28,9 +28,19 @@ namespace BusPlanner.DataAccess
             entity.Id = connection.Query<int>(sql, entity, transaction).Single();
         }
 
+        public void Update(Stop entity)
+        {
+
+        }
+
         public void Delete(Stop entity)
         {
             
+        }
+
+        public void Delete(int key)
+        {
+
         }
 
         public Stop Get(int id)

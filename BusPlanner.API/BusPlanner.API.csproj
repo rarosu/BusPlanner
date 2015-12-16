@@ -109,11 +109,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\RouteController.cs" />
+    <Compile Include="Controllers\StopsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -131,6 +133,10 @@
     <ProjectReference Include="..\BusPlanner.ServiceLayer\BusPlanner.ServiceLayer.csproj">
       <Project>{7c266bc8-2ef9-47da-b196-0186d168154f}</Project>
       <Name>BusPlanner.ServiceLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BusPlanner.ViewModels\BusPlanner.ViewModels.csproj">
+      <Project>{6735758d-1e1c-437c-83da-3b5c82694d89}</Project>
+      <Name>BusPlanner.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

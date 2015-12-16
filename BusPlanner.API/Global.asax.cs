@@ -26,7 +26,7 @@ namespace BusPlanner.API
             var config = GlobalConfiguration.Configuration;
             var builder = new ContainerBuilder();
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
-            builder.RegisterType<TripService>().As<ITripService>();
+            builder.RegisterType<StopsService>().As<IStopsService>();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.Register(t => new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["BusPlanner"].ConnectionString)).As<IDbConnection>();
             var container = builder.Build();
