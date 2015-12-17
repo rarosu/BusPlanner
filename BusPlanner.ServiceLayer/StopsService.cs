@@ -55,6 +55,10 @@ namespace BusPlanner.ServiceLayer
         public ViewModels.Stop Update(ViewModels.Stop viewStop)
         {
             var stop = new Stop { Id = viewStop.id, UserFriendlyName = viewStop.name, Latitude = viewStop.position.lat, Longitude = viewStop.position.lng, ZoneId = viewStop.zoneId };
+
+            // TODO: Remove this! Currently no support to select a zone on the front end, so this will have to be hard-coded.
+            stop.ZoneId = 1;
+
             unitOfWork.Stops.Update(stop);
             unitOfWork.SaveChanges();
             return viewStop;

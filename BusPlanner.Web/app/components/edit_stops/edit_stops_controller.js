@@ -87,6 +87,8 @@
             unitOfWork.add(stop);
             vm.isDirty = unitOfWork.isDirty();
 
+            
+
             vm.selectedStop = stop;
         };
 

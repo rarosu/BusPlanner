@@ -30,17 +30,20 @@ namespace BusPlanner.DataAccess
 
         public void Update(Stop entity)
         {
-
+            var sql = @"UPDATE Stops SET UserFriendlyName = @UserFriendlyName, Latitude = @Latitude, Longitude = @Longitude, ZoneId = @ZoneId WHERE Id = @Id";
+            connection.Execute(sql, entity, transaction);
         }
 
         public void Delete(Stop entity)
         {
-            
+            var sql = @"DELETE FROM Stops WHERE Id = @Id";
+            connection.Execute(sql, entity, transaction);
         }
 
         public void Delete(int key)
         {
-
+            var sql = @"DELETE FROM Stops WHERE Id = @Id";
+            connection.Execute(sql, new { Id = key }, transaction);
         }
 
         public Stop Get(int id)
