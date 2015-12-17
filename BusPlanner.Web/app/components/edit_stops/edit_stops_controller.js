@@ -44,12 +44,13 @@
         });
         */
 
+        // Load all stops from the server.
+        vm.stops = [];
         var unitOfWork = unitOfWorkService.create(stopRepositoryService, stopService.getUtils());
         unitOfWork.getAll().then(function (stops) {
             vm.stops = stops;
         }, function (error) {
             console.log(error);
-            vm.stops = [];
         });
 
         vm.isMapReady = false;
