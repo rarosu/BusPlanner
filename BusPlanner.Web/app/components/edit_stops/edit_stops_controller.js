@@ -83,13 +83,11 @@
 
         vm.addStop = function (position) {
             var stop = stopService.create();
-            stop.position = position;
-
+            stop.position = angular.copy(position);
+            
             unitOfWork.add(stop);
-            console.log(unitOfWork);
-            console.log(vm.stops);
-
             vm.isDirty = unitOfWork.isDirty();
+
             vm.selectedStop = stop;
         };
 

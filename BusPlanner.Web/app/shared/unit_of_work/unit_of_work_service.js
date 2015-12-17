@@ -35,7 +35,7 @@
         };
 
         UnitOfWork.prototype.isDirty = function () {
-            return this._entities.equals(this._shadows);
+            return !this._entities.equals(this._shadows);
         };
 
         UnitOfWork.prototype.get = function (id) {

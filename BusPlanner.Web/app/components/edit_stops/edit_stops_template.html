@@ -16,7 +16,7 @@
                                    gmap-element="marker" 
                                    gmap-target="map" 
                                    position="stop.position" 
-                                   title="{{stop.title}}" 
+                                   title="{{stop.name}}" 
                                    draggable="true" 
                                    gmap-marker-mousedown="vm.selectStop(stop)" >
                     <google-map-context-menu gmap-target="marker" click-position="menuPosition">
@@ -58,7 +58,7 @@
                         </div>
                         <div class="form-group col-md-12">
                             <label for="edit-stop-title-input">Name</label>
-                            <input id="edit-stop-title-input" class="form-control" type="text" ng-model="vm.selectedStop.title" />
+                            <input id="edit-stop-title-input" class="form-control" type="text" ng-model="vm.selectedStop.name" />
                         </div>
                     </form>
                 </div>
