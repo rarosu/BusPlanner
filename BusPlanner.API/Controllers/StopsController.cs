@@ -18,30 +18,35 @@ namespace BusPlanner.API.Controllers
         }
 
         // GET /api/stops
+        [Route("api/stops")]
         public List<ViewModels.Stop> Get()
         {
             return stopsService.All();
         }
 
         // POST /api/stops
+        [Route("api/stops")]
         public ViewModels.Stop Post(ViewModels.Stop stop)
         {
             return stopsService.Add(stop);
         }
 
         // GET /api/stops/id
+        [Route("api/stops/{id}")]
         public ViewModels.Stop Get(int id)
         {
             return stopsService.Get(id);
         }
 
         // PUT /api/stops/id
+        [Route("api/stops/{id}")]
         public ViewModels.Stop Put(int id, ViewModels.Stop stop)
         {
             return stopsService.Update(stop);
         }
 
         // DELETE /api/stops/id
+        [Route("api/stops/{id}")]
         public void Delete(int id)
         {
             stopsService.Delete(id);

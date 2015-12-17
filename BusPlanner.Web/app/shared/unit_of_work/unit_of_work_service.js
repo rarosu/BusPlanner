@@ -53,17 +53,11 @@
 
         UnitOfWork.prototype.getAll = function () {
             var _this = this;
-            return $q(function (resolve, reject) {
-                _this._repository.getAll().then(function (entities) {
-                    for (var i = 0; i < entities.length; i++) {
-                        _this._entities.insertOrUpdate(entities[i]);
-                        _this._shadows.insertOrUpdate(angular.copy(entities[i]));
-                    }
-
-                    resolve(entities);
-                }, function (error) {
-                    reject(error);
-                });
+            return _this._repository.getAll().then(function (entities) {
+                for (var i = 0; i < entities.length; i++) {
+                    _this._entities.insertOrUpdate(entities[i]);
+                    _this._shadows.insertOrUpdate(angular.copy(entities[i]));
+                }
             });
         };
 
@@ -186,28 +180,30 @@
                 }));
             }
 
-            return $q.allSettled(promises).then(function (promises) {
-                for (var i = 0; i < promises.length; i++) {
-                    promises[i].then(function (result) {
-                        if (result.fulfilled) {
-                            switch (result.value.action) {
-                                case 'added': {
-                                    _this._assign(result.value.original, result.value.updated);
-                                    _this._shadows.insertOrUpdate(angular.copy(result.value.updated));
-                                } break;
+            return $q.allSettled(promises).then(function (results) {
+                for (var i = 0; i < results.length; i++) {
+                    var result = results[i];
 
-                                case 'updated': {
-                                    _this._entities.insertOrUpdate(result.value.updated);
-                                    _this._shadows.insertOrUpdate(angular.copy(result.value.updated));
-                                } break;
+                    if (result.fulfilled) {
+                        switch (result.value.action) {
+                            case 'added': {
+                                _this._assign(result.value.original, result.value.updated);
+                                _this._shadows.insertOrUpdate(angular.copy(result.value.updated));
+                            } break;
 
-                                case 'deleted': {
-                                    _this._shadows.remove(result.value.original);
-                                } break;
-                            }
+                            case 'updated': {
+                                _this._entities.insertOrUpdate(result.value.updated);
+                                _this._shadows.insertOrUpdate(angular.copy(result.value.updated));
+                            } break;
+
+                            case 'deleted': {
+                                _this._shadows.remove(result.value.original);
+                            } break;
                         }
-                    });
+                    }
                 }
+
+                return results;
             });
         };
     }]);

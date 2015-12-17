@@ -33,7 +33,8 @@ namespace BusPlanner.API
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 
             // Configure WebAPI.
-            GlobalConfiguration.Configure(WebApiConfig.Register);   
+            WebApiConfig.Register(GlobalConfiguration.Configuration);
+            GlobalConfiguration.Configuration.EnsureInitialized();
         }
 
         protected void Session_Start(object sender, EventArgs e)

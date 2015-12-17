@@ -16,7 +16,8 @@ namespace BusPlanner.API.App_Start
             config.MapHttpAttributeRoutes();
 
             // Globally enable cross-origin requests.
-            config.EnableCors(new EnableCorsAttribute(origins: "http://localhost:65112", headers: "*", methods: "*"));
+            //config.EnableCors(new EnableCorsAttribute(origins: "http://localhost:65112", headers: "*", methods: "*"));
+            config.EnableCors(new EnableCorsAttribute(origins: "*", headers: "*", methods: "*"));
 
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
         }

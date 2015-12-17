@@ -48,8 +48,7 @@
         var unitOfWork = unitOfWorkService.create(stopRepositoryService, stopService.getUtils());
         vm.stops = unitOfWork.getEntities();
         unitOfWork.getAll().then(function (stops) {
-            console.log('successfully loaded stops:');
-            console.log(vm.stops);
+
         }, function (error) {
             console.log(error);
         });
@@ -102,6 +101,18 @@
                 vm.isDirty = unitOfWork.isDirty();
             }
         }
+
+        vm.save = function () {
+            unitOfWork.save().then(function (results) {
+                for (var i = 0; i < results.length; i++) {
+                    if (!results[i].fulfilled) {
+                        console.log(results[i].reason);
+                    }
+                }
+
+                vm.isDirty = unitOfWork.isDirty();
+            });
+        };
 
         mapIsReady.ready().then(function (map) {
             vm.isMapReady = true;

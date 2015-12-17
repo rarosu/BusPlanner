@@ -3,9 +3,10 @@
 
     angular.module('busplanner.repositories')
     .service('stopRepositoryService', ['$http', '$q', 'stopService', function ($http, $q, stopService) {
+        var baseAddress = 'http://localhost:65107/api/';
         this.getAll = function () {
             return $q(function (resolve, reject) {
-                $http.get('api/stops', function (response) {
+                $http.get(baseAddress + 'stops').then(function (response) {
                     var stops = [];
                     for (var i = 0; i < response.data.length; i++) {
                         var stop = stopService.createFromValues(response.data[i]);
@@ -21,7 +22,7 @@
 
         this.get = function (id) {
             return $q(function (resolve, reject) {
-                $http.get('api/stops/' + id, function (response) {
+                $http.get(baseAddress + 'stops/' + id).then(function (response) {
                     var stop = stopService.createFromValues(response.data);
                     resolve(stop);
                 }, function (response) {
@@ -32,10 +33,10 @@
 
         this.add = function (stop) {
             return $q(function (resolve, reject) {
-                $http.post('api/stops', stop, function (response) {
+                $http.post(baseAddress + 'stops', stop).then(function (response) {
                     var updatedStop = stopService.createFromValues(response.data);
                     resolve(updatedStop);
-                }, function(response) {
+                }, function (response) {
                     reject(response);
                 });
             });
@@ -43,8 +44,8 @@
 
         this.update = function (stop) {
             return $q(function (resolve, reject) {
-                $http.put('api/stops/' + stop.id, stop, function (response) {
-                    var updatedStop = stopService.createFromValues(response);
+                $http.put(baseAddress + 'stops/' + stop.id, stop).then(function (response) {
+                    var updatedStop = stopService.createFromValues(response.data);
                     resolve(updatedStop);
                 }, function (response) {
                     reject(response);
@@ -54,7 +55,7 @@
 
         this.delete = function (stop) {
             return $q(function (resolve, reject) {
-                $http.delete('api/stops/' + stop.id, function (response) {
+                $http.delete(baseAddress + 'stops/' + stop.id).then(function (response) {
                     resolve();
                 }, function (response) {
                     reject(response);
