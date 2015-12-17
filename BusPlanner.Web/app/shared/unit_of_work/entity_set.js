@@ -31,11 +31,37 @@
             }
         };
 
+        EntitySet.prototype.update = function (entity) {
+            var index = this.indexOfByKeyOrReference(entity);
+            if (index !== -1) {
+                this._assign(this.entities[index], entity);
+            }
+        };
+
+        EntitySet.prototype.insertOrUpdate = function (entity) {
+            var index = this.indexOfByKeyOrReference(entity);
+            if (index !== -1) {
+                this._assign(this.entities[index], entity);
+            } else {
+                this.entities.push(entity);
+            }
+        };
+
         EntitySet.prototype.remove = function (entity) {
-            var index = this.indexOfByKey(this._getKey(entity));
+            var index = this.indexOfByKeyOrReference(entity);
             if (index !== -1) {
                 this.entities.splice(index, 1);
             }
+        };
+
+        EntitySet.prototype.equals = function (compareTo) {
+            if (this.entities.length !== compareTo.entities.length) return false;
+
+            for (var i = 0; i < this.entities.length; i++) {
+                if (!this._equals(this.entities[i], compareTo.entities[i])) return false;
+            }
+
+            return true;
         };
 
         EntitySet.prototype.indexOfByValue = function (entity) {

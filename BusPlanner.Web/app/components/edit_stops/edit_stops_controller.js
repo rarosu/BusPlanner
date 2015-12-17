@@ -45,14 +45,16 @@
         */
 
         // Load all stops from the server.
-        vm.stops = [];
         var unitOfWork = unitOfWorkService.create(stopRepositoryService, stopService.getUtils());
+        vm.stops = unitOfWork.getEntities();
         unitOfWork.getAll().then(function (stops) {
-            vm.stops = stops;
+            console.log('successfully loaded stops:');
+            console.log(vm.stops);
         }, function (error) {
             console.log(error);
         });
 
+        vm.isDirty = false;
         vm.isMapReady = false;
         vm.map = null;
         vm.selectedStop = null;
@@ -85,7 +87,9 @@
 
             unitOfWork.add(stop);
             console.log(unitOfWork);
+            console.log(vm.stops);
 
+            vm.isDirty = unitOfWork.isDirty();
             vm.selectedStop = stop;
         };
 
@@ -97,6 +101,7 @@
                 }
 
                 unitOfWork.remove(stop);
+                vm.isDirty = unitOfWork.isDirty();
             }
         }
 

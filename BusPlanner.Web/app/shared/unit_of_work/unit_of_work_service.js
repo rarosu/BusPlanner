@@ -16,13 +16,6 @@
             return new UnitOfWork(repository, entityUtils);
         };
 
-        var EntityState = {
-            UNMODIFIED: 0,
-            ADDED: 1,
-            MODIFIED: 2,
-            DELETED: 3
-        };
-
         function UnitOfWork(repository, entityUtils) {
             this._repository = repository;
             this._getKey = entityUtils.getKey || function (entity) { return entity.id };
@@ -30,13 +23,27 @@
             this._equals = entityUtils.equals || function (lhs, rhs) { return this._getKey(lhs) === this._getKey(rhs); }
             this._assign = entityUtils.assign;
             this._entities = entitySet.create(entityUtils);
-            this._changeTracker = {};
+            this._shadows = entitySet.create(entityUtils);
         }
 
+        UnitOfWork.prototype.getEntities = function () {
+            return this._entities.entities;
+        };
+
+        UnitOfWork.prototype.getLastKnownServerState = function () {
+            return this._shadows.entities;
+        };
+
+        UnitOfWork.prototype.isDirty = function () {
+            return this._entities.equals(this._shadows);
+        };
+
         UnitOfWork.prototype.get = function (id) {
+            var _this = this;
             return $q(function (resolve, reject) {
-                this._repository.get(id).then(function (entity) {
-                    this._insertOrUpdateEntity(entity);
+                _this._repository.get(id).then(function (entity) {
+                    _this._entities.insertOrUpdate(entity);
+                    _this._shadows.insertOrUpdate(angular.copy(entity));
                     resolve(entity);
                 }, function (error) {
                     reject(error);
@@ -49,7 +56,8 @@
             return $q(function (resolve, reject) {
                 _this._repository.getAll().then(function (entities) {
                     for (var i = 0; i < entities.length; i++) {
-                        _this._insertOrUpdateEntity(entities[i]);
+                        _this._entities.insertOrUpdate(entities[i]);
+                        _this._shadows.insertOrUpdate(angular.copy(entities[i]));
                     }
 
                     resolve(entities);
@@ -60,111 +68,147 @@
         };
 
         UnitOfWork.prototype.add = function (entity) {
-            var storedEntity = this._insertOrUpdateEntity(entity);
-            this._changeTracker[storedEntity] = EntityState.ADDED;
+            this._entities.insertOrUpdate(entity);
         };
 
         UnitOfWork.prototype.remove = function (entity) {
-            var existingEntity = this._entities.getByKeyOrReference(entity);
-            if (existingEntity !== null) {
-                if (this._changeTracker[existingEntity] === EntityState.ADDED) {
-                    this._entities.remove(existingEntity);
-                    delete this._changeTracker[existingEntity];
-                } else {
-                    this._changeTracker[existingEntity] = EntityState.DELETED;
-                }
-            }
+            this._entities.remove(entity);
         };
 
         UnitOfWork.prototype.update = function (entity) {
-            var existingEntity = this._entities.getByKeyOrReference(entity);
-            if (existingEntity !== null) {
-                this._assign(existingEntity, entity);
-                if (this._changeTracker[existingEntity] !== EntityState.ADDED) {
-                    this._changeTracker[existingEntity] = EntityState.MODIFIED;
+            this._entities.update(entity);
+        };
+
+        UnitOfWork.prototype._getAdded = function () {
+            var added = [];
+
+            var current = this._entities.entities;
+            for (var i = 0; i < current.length; i++) {
+                if (this._getKey(current[i]) == this._getDefaultKey()) {
+                    added.push(current[i]);
                 }
             }
+
+            return added;
+        };
+
+        UnitOfWork.prototype._getModified = function () {
+            var modified = [];
+
+            var current = this._entities.entities;
+            var shadows = this._shadows.entities;
+            for (var i = 0; i < current.length; i++) {
+                var currentKey = this._getKey(current[i]);
+                if (currentKey !== this._getDefaultKey()) {
+                    var shadowIndex = this._shadows.indexOfByKey(currentKey);
+                    if (shadowIndex !== -1) {
+                        if (!this._equals(current[i], shadows[shadowIndex])) {
+                            modified.push(current[i]);
+                        }
+                    }
+                }
+            }
+
+            return modified;
+        };
+
+        UnitOfWork.prototype._getDeleted = function () {
+            var deleted = [];
+
+            var current = this._entities.entities;
+            var shadows = this._shadows.entities;
+            for (var i = 0; i < shadows.length; i++) {
+                var currentIndex = this._entities.indexOfByKey(this._getKey(shadows[i]));
+                if (currentIndex === -1) {
+                    deleted.push(shadows[i]);
+                }
+            }
+
+            return deleted;
         };
 
         UnitOfWork.prototype.save = function () {
+            var _this = this;
+            
+            // Determine the diff between the current state and the last known server state (shadows).
+            var added = this._getAdded();
+            var modified = this._getModified();
+            var deleted = this._getDeleted();
+
+            // Send the data to the server and create promises for when it completes.
             var promises = [];
-            for (var entity in this._changeTracker) {
-                switch (this._changeTracker[entity]) {
-                    case EntityState.ADDED: {
-                        promises.push($q(function (resolve, reject) {
-                            (function (entity) {
-                                this._repository.add(entity).then(function (updatedEntity) {
-                                    resolve(entity, updatedEntity);
-                                }, function (error) {
-                                    reject(error);
-                                });
-                            })(entity);
-                        }));
-                    } break;
-
-                    case EntityState.MODIFIED: {
-                        promises.push($q(function (resolve, reject) {
-                            (function (entity) {
-                                this._repository.update(entity).then(function (updatedEntity) {
-                                    resolve(entity, updatedEntity);
-                                }, function (error) {
-                                    reject(error);
-                                });
-                            })(entity);
-                        }));
-                    } break;
-
-                    case EntityState.DELETED: {
-                        promises.push($q(function (resolve, reject) {
-                            (function (entity) {
-                                this._repository.delete(entity).then(function () {
-                                    resolve(entity);
-                                }, function (error) {
-                                    reject(error);
-                                });
-                            })(entity);
-                        }));
-                    } break;
-                }
+            var i = 0;
+            for (i = 0; i < added.length; i++) {
+                promises.push($q(function (resolve, reject) {
+                    (function (entity) {
+                        _this._repository.add(entity).then(function (updatedEntity) {
+                            resolve({
+                                action: 'added',
+                                original: entity,
+                                updated: updatedEntity
+                            });
+                        }, function (error) {
+                            reject(error);
+                        });
+                    })(added[i]);
+                }));
             }
 
-            return $q.all(promises).then(function (promises) {
-                // Update the states.
-                for (var i = 0; i < promises.length; i++) {
-                    promises[i].then(function (entity, updatedEntity) {
-                        switch (this._changeTracker[entity]) {
-                            case EntityState.ADDED:
-                            case EntityState.MODIFIED: {
-                                this._assign(entity, updatedEntity);
-                                this._changeTracker[entity] = EntityState.UNMODIFIED;
-                            } break;
+            for (i = 0; i < modified.length; i++) {
+                promises.push($q(function (resolve, reject) {
+                    (function (entity) {
+                        _this._repository.update(entity).then(function (updatedEntity) {
+                            resolve({
+                                action: 'updated',
+                                original: entity,
+                                updated: updatedEntity
+                            });
+                        }, function (error) {
+                            reject(error);
+                        });
+                    })(modified[i]);
+                }));
+            }
 
-                            case EntityState.DELETED: {
-                                delete this._changeTracker[entity];
-                            } break;
+            for (i = 0; i < deleted.length; i++) {
+                promises.push($q(function (resolve, reject) {
+                    (function (shadow) {
+                        _this._repository.delete(shadow).then(function () {
+                            resolve({
+                                action: 'deleted',
+                                original: shadow,
+                                updated: null
+                            });
+                        }, function (error) {
+                            reject(error);
+                        });
+                    })(deleted[i]);
+                }));
+            }
+
+            return $q.allSettled(promises).then(function (promises) {
+                for (var i = 0; i < promises.length; i++) {
+                    promises[i].then(function (result) {
+                        if (result.fulfilled) {
+                            switch (result.value.action) {
+                                case 'added': {
+                                    _this._assign(result.value.original, result.value.updated);
+                                    _this._shadows.insertOrUpdate(angular.copy(result.value.updated));
+                                } break;
+
+                                case 'updated': {
+                                    _this._entities.insertOrUpdate(result.value.updated);
+                                    _this._shadows.insertOrUpdate(angular.copy(result.value.updated));
+                                } break;
+
+                                case 'deleted': {
+                                    _this._shadows.remove(result.value.original);
+                                } break;
+                            }
                         }
-                    }, function (error) {
-                        // No-op. Keep the change tracking status.
-                        // TODO: Propagate errors to client.
-                        console.log("Failed to synchronize entity:");
-                        console.log(error);
                     });
                 }
-                
-                resolve();
             });
-        };
-
-        UnitOfWork.prototype._insertOrUpdateEntity = function (entity) {
-            var existingEntity = this._entities.getByKeyOrReference(entity);
-            if (existingEntity !== null) {
-                this._assign(existingEntity, entity);
-            } else {
-                this._entities.insert(entity);
-                this._changeTracker[entity] = EntityState.UNMODIFIED;
-            }
-
-            return existingEntity || entity;
         };
     }]);
 })();

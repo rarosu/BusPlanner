@@ -5,7 +5,7 @@
             <p class="text-danger"><strong>This functionality is currently under development.</strong></p>
             <div>
                 <button class="btn btn-primary" ng-disabled="!vm.isMapReady" ng-click="vm.addStopInCenter()">Add Stop</button>
-                <button class="btn btn-success"><b>Save</b></button>
+                <button class="btn btn-success" ng-disabled="!vm.isDirty"><b>Save</b></button>
             </div>
         </div>
     </div>
