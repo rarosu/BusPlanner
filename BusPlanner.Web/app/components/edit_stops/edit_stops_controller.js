@@ -3,7 +3,7 @@
 
     angular
     .module('busplanner')
-    .controller('EditStopsController', ['$scope', '$resource', 'mapLoader', 'mapIsReady', 'unitOfWorkService', 'stopRepositoryService', 'stopService', function ($scope, $resource, mapLoader, mapIsReady, unitOfWorkService, stopRepositoryService, stopService) {
+    .controller('EditStopsController', ['$scope', 'mapLoader', 'mapIsReady', 'unitOfWorkService', 'stopRepositoryService', 'stopService', function ($scope, mapLoader, mapIsReady, unitOfWorkService, stopRepositoryService, stopService) {
         var vm = this;
 
         //////////////////////////
@@ -16,53 +16,13 @@
                 lng: 15.5
             },
             zoom: 14
-        }
+        };
 
-        /*
-        vm.stops = [{
-                position: {
-                    lat: 60.4988799567414,
-                    lng: 15.476053237915
-                },
-                title: 'Barbergsvägen'
-            }, {
-                position: {
-                    lat: 60.5005273478001,
-                    lng: 15.4825901985168
-                },
-                title: 'Borlänge Lövängsgatan'
-            }
-        ];
-        */
-
-        /*
         vm.stops = [];
-        editStopsUnitOfWorkService.getStops().then(function (stops) {
-            vm.stops = stops;
-        }, function (error) {
-            // TODO: Handle failure to load events.
-        });
-        */
-
-        // Load all stops from the server.
-        var unitOfWork = unitOfWorkService.create(stopRepositoryService, stopService.getUtils());
-        vm.stops = unitOfWork.getEntities();
-        unitOfWork.getAll().then(function (stops) {
-
-        }, function (error) {
-            console.log(error);
-        });
-
-        // Watch for any changes in the stops.
-        $scope.$watch('vm.stops', function (newValue, oldValue) {
-            vm.isDirty = unitOfWork.isDirty();
-        }, true);
-
         vm.isDirty = false;
         vm.isMapReady = false;
         vm.map = null;
         vm.selectedStop = null;
-
 
         ////////////////////////
         // Controller methods //
@@ -92,8 +52,6 @@
             unitOfWork.add(stop);
             vm.isDirty = unitOfWork.isDirty();
 
-            
-
             vm.selectedStop = stop;
         };
 
@@ -121,6 +79,26 @@
             });
         };
 
+        //////////////////////
+        // Controller setup //
+        //////////////////////
+
+        // Load all stops from the server.
+        var unitOfWork = unitOfWorkService.create(stopRepositoryService, stopService.getUtils());
+        vm.stops = unitOfWork.getEntities();
+        unitOfWork.getAll().then(function (stops) {
+
+        }, function (error) {
+            // TODO: Consolidate these errors into a message displayed to the user.
+            console.log(error);
+        });
+
+        // Watch for any changes in the stops.
+        $scope.$watch('vm.stops', function (newValue, oldValue) {
+            vm.isDirty = unitOfWork.isDirty();
+        }, true);
+        
+        // Mark the map as ready for the UI elements.
         mapIsReady.ready().then(function (map) {
             vm.isMapReady = true;
             vm.map = map;
