@@ -53,6 +53,11 @@
             console.log(error);
         });
 
+        // Watch for any changes in the stops.
+        $scope.$watch('vm.stops', function (newValue, oldValue) {
+            vm.isDirty = unitOfWork.isDirty();
+        }, true);
+
         vm.isDirty = false;
         vm.isMapReady = false;
         vm.map = null;
