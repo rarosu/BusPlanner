@@ -19,7 +19,7 @@
         </div>
         <div class="col-md-9">
             <google-map gmap-element="map" container-id="map-container" center="vm.mapConfig.center" zoom="vm.mapConfig.zoom">
-                <google-map-marker ng-repeat="stop in vm.stops" gmap-element="marker" gmap-target="map" position="stop.position" title="{{stop.title}}" draggable="false">
+                <google-map-marker ng-repeat="stop in vm.stops" gmap-element="marker" gmap-target="map" position="stop.position" title="{{stop.name}}" draggable="false">
                 </google-map-marker>
             </google-map>
         </div>

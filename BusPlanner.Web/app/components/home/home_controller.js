@@ -3,27 +3,35 @@
 
     angular
     .module('busplanner')
-    .controller('HomeController', ['$resource', 'mapLoader', function ($resource, mapLoader) {
+    .controller('HomeController', ['unitOfWorkService', 'stopRepositoryService', 'stopService', function (unitOfWorkService, stopRepositoryService, stopService) {
         var vm = this;
 
+        //////////////////////////
+        // Controller variables //
+        //////////////////////////
+
         vm.mapConfig = {
-            center: { lat: 15.0, lng: 45.0 },
-            zoom: 8
+            center: {
+                lat: 60.5,
+                lng: 15.5
+            },
+            zoom: 14
         };
 
-        vm.stops = [{
-                position: {
-                    lat: 15.0,
-                    lng: 45.0
-                },
-                title: 'Bus Stop 1'
-            }, {
-                position: {
-                    lat: 15.0,
-                    lng: 46.0
-                },
-                title: 'Bus Stop 2'
-            }
-        ];
+        vm.stops = [];
+
+        //////////////////////
+        // Controller setup //
+        //////////////////////
+
+        // Load all stops from the server.
+        var unitOfWork = unitOfWorkService.create(stopRepositoryService, stopService.getUtils());
+        vm.stops = unitOfWork.getEntities();
+        unitOfWork.getAll().then(function (stops) {
+
+        }, function (error) {
+            // TODO: Consolidate these errors into a message displayed to the user.
+            console.log(error);
+        });
     }]);
 })();
