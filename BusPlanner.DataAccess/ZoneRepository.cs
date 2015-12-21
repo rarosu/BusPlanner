@@ -30,7 +30,8 @@ namespace BusPlanner.DataAccess
 
         public void Update(Zone entity)
         {
-            throw new NotImplementedException();
+            var sql = @"UPDATE Zones SET UserFriendlyName = @UserFriendlyName WHERE Id = @Id";
+            connection.Execute(sql, entity, transaction);
         }
 
         public void Delete(Zone entity)
@@ -41,7 +42,8 @@ namespace BusPlanner.DataAccess
 
         public void Delete(int key)
         {
-            throw new NotImplementedException();
+            var sql = @"DELETE FROM Zones Where Id = @Id";
+            connection.Execute(sql, new { Id = key }, transaction);
         }
 
         public Zone Get(int id)

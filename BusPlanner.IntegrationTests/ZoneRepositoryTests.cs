@@ -118,5 +118,64 @@ namespace BusPlanner.IntegrationTests
                 zone.Should().BeNull();
             }
         }
+
+        [TestMethod]
+        public void ZonesCanBeDeletedById()
+        {
+            var id = 0;
+            var container = AutofacBuilder.CreateContainer();
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var uow = scope.Resolve<IUnitOfWork>();
+                var zone = new Zone { UserFriendlyName = "Borlänge" };
+                uow.Zones.Add(zone);
+                uow.SaveChanges();
+                id = zone.Id;
+            }
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var uow = scope.Resolve<IUnitOfWork>();
+                uow.Zones.Delete(id);
+            }
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var uow = scope.Resolve<IUnitOfWork>();
+                var zone = uow.Zones.Get(id);
+                zone.Should().BeNull();
+            }
+        }
+
+        [TestMethod]
+        public void ZonesCanBeUpdated()
+        {
+            var id = 0;
+            var container = AutofacBuilder.CreateContainer();
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var uow = scope.Resolve<IUnitOfWork>();
+                var zone = new Zone { UserFriendlyName = "Borlänge" };
+                uow.Zones.Add(zone);
+                uow.SaveChanges();
+                id = zone.Id;
+            }
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var uow = scope.Resolve<IUnitOfWork>();
+                var zone = uow.Zones.Get(id);
+                zone.UserFriendlyName = "Falun";
+                uow.Zones.Update(zone);
+                uow.SaveChanges();
+            }
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var uow = scope.Resolve<IUnitOfWork>();
+                var zone = uow.Zones.Get(id);
+                zone.UserFriendlyName.Should().Be("Falun");
+            }
+        }
     }
 }
